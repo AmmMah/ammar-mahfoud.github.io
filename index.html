@@ -26,10 +26,27 @@
         .project-img-container {
             position: relative;
             overflow: hidden;
-            border-radius: 1rem;
+            border-radius: 1.5rem;
             aspect-ratio: 16/9;
             background: #1e293b;
             cursor: pointer;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .project-img-container:hover .overlay {
+            opacity: 1;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(59, 130, 246, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(4px);
         }
 
         .text-gradient {
@@ -65,16 +82,16 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(2, 6, 23, 0.95);
+            background: rgba(2, 6, 23, 0.98);
             z-index: 2000;
             justify-content: center;
             align-items: center;
         }
         #lightbox-img {
             max-width: 90%;
-            max-height: 80vh;
+            max-height: 75vh;
             border-radius: 12px;
-            box-shadow: 0 0 40px rgba(0,0,0,0.5);
+            box-shadow: 0 0 50px rgba(59, 130, 246, 0.2);
         }
 
         @media print {
@@ -110,7 +127,6 @@
             .project-img-container { border: 1px solid #e2e8f0 !important; }
             aside { break-inside: avoid; }
             section { break-inside: avoid; }
-            img { border: 1px solid #e2e8f0 !important; }
         }
 
         #copy-notification {
@@ -130,13 +146,14 @@
 
     <!-- Lightbox -->
     <div id="lightbox" class="no-print" onclick="this.style.display='none'">
-        <div class="relative flex flex-col items-center gap-6" onclick="event.stopPropagation()">
-            <button onclick="document.getElementById('lightbox').style.display='none'" class="absolute -top-12 right-0 text-white text-3xl hover:text-blue-400 transition-colors">&times;</button>
-            <img id="lightbox-img" src="" alt="Preview">
-            <div class="flex gap-8">
-                <button onclick="changeImage(-1)" class="bg-white/10 p-4 rounded-full hover:bg-white/20 text-white transition-all"><i class="fas fa-chevron-left"></i></button>
-                <button onclick="changeImage(1)" class="bg-white/10 p-4 rounded-full hover:bg-white/20 text-white transition-all"><i class="fas fa-chevron-right"></i></button>
+        <div class="relative flex flex-col items-center gap-6 w-full" onclick="event.stopPropagation()">
+            <button onclick="document.getElementById('lightbox').style.display='none'" class="absolute -top-16 right-4 text-white text-4xl hover:text-blue-400 transition-colors">&times;</button>
+            <div class="flex items-center justify-center w-full px-4 gap-4">
+                <button onclick="changeImage(-1)" class="bg-white/5 p-4 rounded-full hover:bg-white/20 text-white transition-all"><i class="fas fa-chevron-left"></i></button>
+                <img id="lightbox-img" src="" alt="Preview">
+                <button onclick="changeImage(1)" class="bg-white/5 p-4 rounded-full hover:bg-white/20 text-white transition-all"><i class="fas fa-chevron-right"></i></button>
             </div>
+            <p id="gallery-counter" class="text-slate-500 text-sm font-mono"></p>
         </div>
     </div>
 
@@ -186,7 +203,7 @@
             
             <!-- Left Side -->
             <aside class="md:col-span-4 flex flex-col gap-6">
-                <!-- Technical Arsenal -->
+                <!-- Skills -->
                 <div class="glass-card rounded-3xl p-8">
                     <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-6" data-en="Technical Arsenal" data-ar="الترسانة التقنية">Technical Arsenal</h3>
                     <div class="space-y-6">
@@ -245,36 +262,38 @@
                 <section>
                     <div class="glass-card rounded-3xl p-8">
                         <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-6 flex items-center gap-2">
-                            <i class="fas fa-star no-print"></i> <span data-en="Primary Project Showcase" data-ar="عرض المشروع الأساسي">Primary Project Showcase</span>
+                            <i class="fas fa-star no-print text-yellow-500"></i> <span data-en="Primary Project Showcase" data-ar="عرض المشروع الأساسي">Primary Project Showcase</span>
                         </h3>
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <div class="space-y-4">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <div class="space-y-5">
                                 <h4 class="text-2xl font-bold text-white print:text-slate-900" data-en="Currency & Remittance System" data-ar="نظام الصرافة والحوالات">Currency & Remittance System</h4>
-                                <p class="text-sm text-slate-400 leading-relaxed print:text-slate-600" data-en="A robust management platform built to handle high-frequency currency exchange and remittance operations. Featuring real-time balance tracking and automated fee structures." data-ar="منصة إدارة قوية مصممة للتعامل مع عمليات الصرف والحوالات المتكررة. تتميز بتتبع الرصيد اللحظي وهياكل الرسوم المؤتمتة.">
-                                    A robust management platform built for currency exchange.
+                                <p class="text-sm text-slate-400 leading-relaxed print:text-slate-600" data-en="A comprehensive enterprise platform built for managing complex currency exchange and money transfer operations. Features secure authentication, real-time balance sheets, and automated transaction logging." data-ar="منصة مؤسسية شاملة مصممة لإدارة عمليات صرف العملات وتحويل الأموال المعقدة. تتميز بمصادقة آمنة، ميزانيات عمومية لحظية، وتسجيل آلي للعمليات.">
+                                    A comprehensive enterprise platform for managing complex currency exchange.
                                 </p>
-                                <div class="flex flex-wrap gap-2 pt-2">
+                                <div class="flex flex-wrap gap-2">
                                     <span class="skill-badge">Angular</span>
+                                    <span class="skill-badge">TypeScript</span>
                                     <span class="skill-badge">Supabase</span>
-                                    <span class="skill-badge">Firebase Auth</span>
+                                    <span class="skill-badge">Tailwind</span>
                                 </div>
-                                <div class="flex gap-4 pt-4 no-print text-[10px] font-bold">
-                                    <a href="#" class="text-blue-400 hover:text-white transition-colors flex items-center gap-1"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                                <div class="flex gap-4 pt-4 no-print text-[11px] font-bold">
+                                    <a href="#" class="text-blue-400 hover:text-white transition-colors flex items-center gap-1"><i class="fas fa-external-link-alt"></i> Live View</a>
                                     <a href="#" class="text-slate-500 hover:text-white transition-colors flex items-center gap-1"><i class="fab fa-github"></i> Codebase</a>
                                 </div>
                             </div>
-                            <div class="grid grid-cols-2 gap-2">
-                                <div class="project-img-container" onclick="openGallery(0)"><img src="ex-1.jpg" onerror="this.src='https://images.unsplash.com/photo-1580519327913-94c5bb22b281?q=80&w=400'" class="w-full h-full object-cover"></div>
-                                <div class="project-img-container" onclick="openGallery(1)"><img src="ex-2.jpg" onerror="this.src='https://images.unsplash.com/photo-1611974715853-268ee9c3468d?q=80&w=400'" class="w-full h-full object-cover"></div>
-                                <div class="col-span-2 project-img-container" style="aspect-ratio: 21/9;" onclick="openGallery(2)">
-                                    <img src="ex-3.jpg" onerror="this.src='https://images.unsplash.com/photo-1551288049-bbbda536339a?q=80&w=800'" class="w-full h-full object-cover">
+                            <div class="project-img-container" onclick="openGallery(0)">
+                                <img src="ex-1.jpg" onerror="this.src='https://images.unsplash.com/photo-1580519327913-94c5bb22b281?q=80&w=800'" class="w-full h-full object-cover">
+                                <div class="overlay">
+                                    <div class="bg-white text-blue-900 px-4 py-2 rounded-full font-bold text-xs flex items-center gap-2">
+                                        <i class="fas fa-images"></i> <span data-en="Open Gallery" data-ar="افتح المعرض">Open Gallery</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- Secondary Projects -->
+                <!-- Kiosk & ETL Projects -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div class="glass-card rounded-3xl p-6">
                         <div class="flex justify-between items-start mb-4">
@@ -282,7 +301,7 @@
                             <span class="text-[10px] font-bold text-slate-500 uppercase">Desktop App</span>
                         </div>
                         <h4 class="font-bold text-white mb-2 print:text-slate-900" data-en="Kiosk Management System" data-ar="نظام إدارة الكيوسك">Kiosk Management System</h4>
-                        <p class="text-[11px] text-slate-400 leading-relaxed mb-4 print:text-slate-600" data-en="A C# .NET solution for touch-screen service kiosks with integrated hardware support." data-ar="حل برمجي بلغة C# .NET لأكشاك الخدمة التي تعمل باللمس مع دعم متكامل للأجهزة.">A C# .NET solution for touch-screen service kiosks.</p>
+                        <p class="text-[11px] text-slate-400 leading-relaxed mb-4 print:text-slate-600" data-en="A C# .NET solution for touch-screen service kiosks with integrated hardware support for printers and scanners." data-ar="حل برمجي بلغة C# .NET لأكشاك الخدمة التي تعمل باللمس مع دعم متكامل للأجهزة كالمطابع والماسحات الضوئية.">A C# .NET solution for touch-screen service kiosks.</p>
                         <div class="flex flex-wrap gap-2 mt-auto">
                             <span class="skill-badge">C# .NET</span>
                             <span class="skill-badge">SQL Server</span>
@@ -294,7 +313,7 @@
                             <span class="text-[10px] font-bold text-slate-500 uppercase">Data Pipeline</span>
                         </div>
                         <h4 class="font-bold text-white mb-2 print:text-slate-900" data-en="ETL Automation Pipeline" data-ar="خط أتمتة ETL">ETL Automation Pipeline</h4>
-                        <p class="text-[11px] text-slate-400 leading-relaxed mb-4 print:text-slate-600" data-en="Custom Python scripts to extract, transform, and load massive datasets into warehouse environments." data-ar="سكربتات بايثون مخصصة لاستخراج وتحويل وتحميل مجموعات البيانات الضخمة في بيئات المستودعات.">Custom Python scripts for data transformation.</p>
+                        <p class="text-[11px] text-slate-400 leading-relaxed mb-4 print:text-slate-600" data-en="Custom Python scripts to extract, transform, and load massive datasets into warehouse environments for reporting." data-ar="سكربتات بايثون مخصصة لاستخراج وتحويل وتحميل مجموعات البيانات الضخمة في بيئات المستودعات لإصدار التقارير.">Custom Python scripts for data transformation.</p>
                         <div class="flex flex-wrap gap-2 mt-auto">
                             <span class="skill-badge">Python</span>
                             <span class="skill-badge">Pandas</span>
@@ -356,21 +375,22 @@
             setTimeout(() => notification.style.display = 'none', 2000);
         }
 
-        // Gallery Functions
         function openGallery(idx) {
             currentImgIdx = idx;
-            const lightbox = document.getElementById('lightbox');
-            const img = document.getElementById('lightbox-img');
-            img.src = projectImages[currentImgIdx];
-            lightbox.style.display = 'flex';
+            updateGallery();
+            document.getElementById('lightbox').style.display = 'flex';
         }
 
         function changeImage(dir) {
             currentImgIdx = (currentImgIdx + dir + projectImages.length) % projectImages.length;
-            document.getElementById('lightbox-img').src = projectImages[currentImgIdx];
+            updateGallery();
         }
 
-        // Keyboard support
+        function updateGallery() {
+            document.getElementById('lightbox-img').src = projectImages[currentImgIdx];
+            document.getElementById('gallery-counter').innerText = `${currentImgIdx + 1} / ${projectImages.length}`;
+        }
+
         document.addEventListener('keydown', (e) => {
             if (document.getElementById('lightbox').style.display === 'flex') {
                 if (e.key === 'ArrowRight') changeImage(1);
