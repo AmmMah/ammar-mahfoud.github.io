@@ -18,7 +18,7 @@
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.3s ease;
-            height: 100%; /* توحيد الارتفاع */
+            height: 100%;
             display: flex;
             flex-direction: column;
         }
@@ -59,13 +59,40 @@
             border-radius: 10px;
         }
 
+        /* تحسينات الطباعة لضمان PDF احترافي */
         @media print {
-            nav, .no-print { display: none !important; }
-            body { background: white !important; color: black !important; padding: 0 !important; }
-            main { pt: 0 !important; width: 100% !important; max-width: 100% !important; }
-            .glass-card { background: white !important; border: 1px solid #e2e8f0 !important; color: black !important; backdrop-filter: none !important; height: auto !important; }
-            .text-gradient { background: none !important; -webkit-text-fill-color: #1e40af !important; color: #1e40af !important; }
-            .skill-badge { background: #f1f5f9 !important; border: 1px solid #cbd5e1 !important; color: #1e40af !important; }
+            @page { margin: 1.5cm; }
+            nav, .no-print, #copy-notification { display: none !important; }
+            body { background: white !important; color: #1e293b !important; padding: 0 !important; }
+            main { padding-top: 0 !important; width: 100% !important; max-width: 100% !important; }
+            .glass-card { 
+                background: white !important; 
+                border: 1px solid #e2e8f0 !important; 
+                color: #1e293b !important; 
+                backdrop-filter: none !important; 
+                height: auto !important; 
+                box-shadow: none !important;
+                break-inside: avoid;
+                margin-bottom: 1rem;
+            }
+            .text-gradient { 
+                background: none !important; 
+                -webkit-text-fill-color: #1e40af !important; 
+                color: #1e40af !important; 
+                font-weight: bold !important;
+            }
+            .skill-badge { 
+                background: #f1f5f9 !important; 
+                border: 1px solid #cbd5e1 !important; 
+                color: #1e40af !important; 
+            }
+            .progress-bar-container { border: 1px solid #e2e8f0 !important; }
+            .progress-fill { background: #3b82f6 !important; }
+            h1, h2, h3, h4 { color: #0f172a !important; }
+            p, span, li { color: #334155 !important; }
+            .project-img-container { border: 1px solid #e2e8f0 !important; }
+            aside { break-inside: avoid; }
+            section { break-inside: avoid; }
         }
 
         #copy-notification {
@@ -101,23 +128,23 @@
         <!-- Header -->
         <header class="mb-12 flex flex-col md:flex-row items-center md:items-end gap-8 text-center md:text-left rtl:md:text-right">
             <div class="relative group">
-                <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-blue-400 rounded-full blur opacity-25"></div>
-                <img src="https://via.placeholder.com/150" alt="Ammar Mahfoud" id="profile-img" class="relative w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-[#020617] bg-slate-800">
+                <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-blue-400 rounded-full blur opacity-25 no-print"></div>
+                <img src="https://via.placeholder.com/150" alt="Ammar Mahfoud" id="profile-img" class="relative w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-[#020617] bg-slate-800 print:border-slate-200">
             </div>
             <div class="flex-1">
                 <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-2">
                     <span data-en="Ammar" data-ar="عمار">Ammar</span> <span class="text-gradient" data-en="Mahfoud" data-ar="محفوظ">Mahfoud</span>
                 </h1>
-                <p class="text-xl text-slate-400 font-light mb-6">
-                    <span class="text-white font-medium" data-en="Senior Data Analyst" data-ar="محلل بيانات أول">Senior Data Analyst</span> & 
-                    <span class="text-white font-medium" data-en="Full-Stack Developer" data-ar="مطور تطبيقات">Full-Stack Developer</span>
+                <p class="text-xl text-slate-400 font-light mb-6 print:text-slate-600">
+                    <span class="text-white font-medium print:text-slate-900" data-en="Senior Data Analyst" data-ar="محلل بيانات أول">Senior Data Analyst</span> & 
+                    <span class="text-white font-medium print:text-slate-900" data-en="Full-Stack Developer" data-ar="مطور تطبيقات">Full-Stack Developer</span>
                 </p>
                 <div class="flex flex-wrap gap-3 justify-center md:justify-start items-center">
-                    <button onclick="copyEmail()" class="flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-lg text-xs hover:bg-slate-800 transition-colors">
-                        <i class="fas fa-envelope text-blue-500"></i> <span id="email-text">Ammar.in.en95@gmail.com</span> <i class="fas fa-copy text-[10px] opacity-50"></i>
+                    <button onclick="copyEmail()" class="flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-lg text-xs hover:bg-slate-800 transition-colors print:bg-white print:border-slate-200">
+                        <i class="fas fa-envelope text-blue-500"></i> <span id="email-text">Ammar.in.en95@gmail.com</span> <i class="fas fa-copy text-[10px] opacity-50 no-print"></i>
                     </button>
-                    <a href="https://linkedin.com/in/ammar-mahfoud" target="_blank" class="bg-slate-900 border border-slate-800 p-2 rounded-lg text-blue-400 hover:text-white transition-colors"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://github.com/ammar-mahfoud" target="_blank" class="bg-slate-900 border border-slate-800 p-2 rounded-lg text-slate-400 hover:text-white transition-colors"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/ammar-mahfoud" target="_blank" class="bg-slate-900 border border-slate-800 p-2 rounded-lg text-blue-400 hover:text-white transition-colors print:bg-white print:border-slate-200"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/ammar-mahfoud" target="_blank" class="bg-slate-900 border border-slate-800 p-2 rounded-lg text-slate-400 hover:text-white transition-colors print:bg-white print:border-slate-200"><i class="fab fa-github"></i></a>
                     <span class="text-xs text-slate-500 flex items-center gap-2"><i class="fas fa-map-marker-alt"></i> <span data-en="Damascus, Syria" data-ar="دمشق، سوريا">Damascus, Syria</span></span>
                 </div>
             </div>
@@ -127,28 +154,28 @@
             
             <!-- Left Side -->
             <aside class="md:col-span-4 flex flex-col gap-6">
-                <!-- Technical Arsenal with Progress Bars -->
+                <!-- Technical Arsenal -->
                 <div class="glass-card rounded-3xl p-8">
                     <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-6" data-en="Technical Arsenal" data-ar="الترسانة التقنية">Technical Arsenal</h3>
                     <div class="space-y-6">
                         <div>
-                            <div class="flex justify-between text-[10px] mb-1"><span class="text-slate-300 font-bold uppercase">SQL / T-SQL</span><span class="text-blue-400">95%</span></div>
+                            <div class="flex justify-between text-[10px] mb-1"><span class="text-slate-300 font-bold uppercase print:text-slate-700">SQL / T-SQL</span><span class="text-blue-400">95%</span></div>
                             <div class="progress-bar-container"><div class="progress-fill" style="width: 95%"></div></div>
                         </div>
                         <div>
-                            <div class="flex justify-between text-[10px] mb-1"><span class="text-slate-300 font-bold uppercase">Power BI / DAX</span><span class="text-blue-400">90%</span></div>
+                            <div class="flex justify-between text-[10px] mb-1"><span class="text-slate-300 font-bold uppercase print:text-slate-700">Power BI / DAX</span><span class="text-blue-400">90%</span></div>
                             <div class="progress-bar-container"><div class="progress-fill" style="width: 90%"></div></div>
                         </div>
                         <div>
-                            <div class="flex justify-between text-[10px] mb-1"><span class="text-slate-300 font-bold uppercase">Python (Automation)</span><span class="text-blue-400">88%</span></div>
+                            <div class="flex justify-between text-[10px] mb-1"><span class="text-slate-300 font-bold uppercase print:text-slate-700">Python (Automation)</span><span class="text-blue-400">88%</span></div>
                             <div class="progress-bar-container"><div class="progress-fill" style="width: 88%"></div></div>
                         </div>
                         <div>
-                            <div class="flex justify-between text-[10px] mb-1"><span class="text-slate-300 font-bold uppercase">Excel / VBA</span><span class="text-blue-400">95%</span></div>
+                            <div class="flex justify-between text-[10px] mb-1"><span class="text-slate-300 font-bold uppercase print:text-slate-700">Excel / VBA</span><span class="text-blue-400">95%</span></div>
                             <div class="progress-bar-container"><div class="progress-fill" style="width: 95%"></div></div>
                         </div>
                         <div>
-                            <div class="flex justify-between text-[10px] mb-1"><span class="text-slate-300 font-bold uppercase">Angular / React</span><span class="text-blue-400">85%</span></div>
+                            <div class="flex justify-between text-[10px] mb-1"><span class="text-slate-300 font-bold uppercase print:text-slate-700">Angular / React</span><span class="text-blue-400">85%</span></div>
                             <div class="progress-bar-container"><div class="progress-fill" style="width: 85%"></div></div>
                         </div>
                     </div>
@@ -158,7 +185,7 @@
                 <div class="glass-card rounded-3xl p-8">
                     <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-4" data-en="Education" data-ar="التعليم">Education</h3>
                     <div class="text-xs">
-                        <p class="text-white font-bold" data-en="B.S. Software Engineering" data-ar="هندسة البرمجيات">B.S. Software Engineering</p>
+                        <p class="text-white font-bold print:text-slate-900" data-en="B.S. Software Engineering" data-ar="هندسة البرمجيات">B.S. Software Engineering</p>
                         <p class="text-slate-500 mt-1">Tishreen University (2020)</p>
                         <p class="text-blue-400 font-bold mt-1">GPA: 70.75%</p>
                     </div>
@@ -170,11 +197,11 @@
                     <div class="space-y-3 text-xs">
                         <div class="flex justify-between">
                             <span data-en="Arabic" data-ar="العربية">Arabic</span>
-                            <span class="text-blue-400" data-en="Native" data-ar="اللغة الأم">Native</span>
+                            <span class="text-blue-400 font-bold" data-en="Native" data-ar="اللغة الأم">Native</span>
                         </div>
                         <div class="flex justify-between">
                             <span data-en="English" data-ar="الإنكليزية">English</span>
-                            <span class="text-blue-400" data-en="Professional" data-ar="مستوى احترافي">Professional</span>
+                            <span class="text-blue-400 font-bold" data-en="Professional" data-ar="مستوى احترافي">Professional</span>
                         </div>
                     </div>
                 </div>
@@ -186,12 +213,12 @@
                 <section>
                     <div class="glass-card rounded-3xl p-8">
                         <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-6 flex items-center gap-2">
-                            <i class="fas fa-star"></i> <span data-en="Primary Project Showcase" data-ar="عرض المشروع الأساسي">Primary Project Showcase</span>
+                            <i class="fas fa-star no-print"></i> <span data-en="Primary Project Showcase" data-ar="عرض المشروع الأساسي">Primary Project Showcase</span>
                         </h3>
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <div class="space-y-4">
-                                <h4 class="text-2xl font-bold text-white" data-en="Currency & Remittance System" data-ar="نظام الصرافة والحوالات">Currency & Remittance System</h4>
-                                <p class="text-sm text-slate-400 leading-relaxed" data-en="A robust management platform built to handle high-frequency currency exchange and remittance operations. Featuring real-time balance tracking and automated fee structures." data-ar="منصة إدارة قوية مصممة للتعامل مع عمليات الصرف والحوالات المتكررة. تتميز بتتبع الرصيد اللحظي وهياكل الرسوم المؤتمتة.">
+                                <h4 class="text-2xl font-bold text-white print:text-slate-900" data-en="Currency & Remittance System" data-ar="نظام الصرافة والحوالات">Currency & Remittance System</h4>
+                                <p class="text-sm text-slate-400 leading-relaxed print:text-slate-600" data-en="A robust management platform built to handle high-frequency currency exchange and remittance operations. Featuring real-time balance tracking and automated fee structures." data-ar="منصة إدارة قوية مصممة للتعامل مع عمليات الصرف والحوالات المتكررة. تتميز بتتبع الرصيد اللحظي وهياكل الرسوم المؤتمتة.">
                                     A robust management platform built for currency exchange.
                                 </p>
                                 <div class="flex flex-wrap gap-2 pt-2">
@@ -218,30 +245,30 @@
                 <!-- Secondary Projects -->
                 <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="glass-card rounded-2xl p-6">
-                        <h5 class="font-bold text-white text-sm mb-2" data-en="Kiosk Monitoring Tool" data-ar="أداة مراقبة الأكشاك">Kiosk Monitoring Tool</h5>
+                        <h5 class="font-bold text-white text-sm mb-2 print:text-slate-900" data-en="Kiosk Monitoring Tool" data-ar="أداة مراقبة الأكشاك">Kiosk Monitoring Tool</h5>
                         <p class="text-[11px] text-slate-500 mb-3" data-en="Internal monitoring hub for Syriatel kiosks, optimizing reporting for hundreds of service points." data-ar="مركز مراقبة داخلي لأكشاك سيريتل، لتحسين التقارير لمئات نقاط الخدمة.">Internal monitoring hub for Syriatel kiosks.</p>
-                        <div class="flex gap-2"><span class="text-[9px] text-blue-400">ASP.NET</span><span class="text-[9px] text-blue-400">SQL Server</span></div>
+                        <div class="flex gap-2"><span class="text-[9px] text-blue-500 font-bold">ASP.NET</span><span class="text-[9px] text-blue-500 font-bold">SQL Server</span></div>
                     </div>
                     <div class="glass-card rounded-2xl p-6">
-                        <h5 class="font-bold text-white text-sm mb-2" data-en="Python Data Pipeline" data-ar="خط معالجة بيانات بايثون">Python Data Pipeline</h5>
+                        <h5 class="font-bold text-white text-sm mb-2 print:text-slate-900" data-en="Python Data Pipeline" data-ar="خط معالجة بيانات بايثون">Python Data Pipeline</h5>
                         <p class="text-[11px] text-slate-500 mb-3" data-en="Automated ETL scripts to handle 6M+ monthly records, reducing validation time by 75%." data-ar="سكربتات ETL مؤتمتة لمعالجة أكثر من 6 ملايين سجل شهرياً، مما قلل وقت التحقق بنسبة 75%.">Automated ETL scripts to handle 6M+ monthly records.</p>
-                        <div class="flex gap-2"><span class="text-[9px] text-blue-400">Python</span><span class="text-[9px] text-blue-400">Pandas</span></div>
+                        <div class="flex gap-2"><span class="text-[9px] text-blue-500 font-bold">Python</span><span class="text-[9px] text-blue-500 font-bold">Pandas</span></div>
                     </div>
                 </section>
 
                 <!-- Experience -->
                 <section class="glass-card rounded-3xl p-8">
                     <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-6 flex items-center gap-2">
-                        <i class="fas fa-briefcase"></i> <span data-en="Professional Experience" data-ar="الخبرة العملية">Professional Experience</span>
+                        <i class="fas fa-briefcase no-print"></i> <span data-en="Professional Experience" data-ar="الخبرة العملية">Professional Experience</span>
                     </h3>
                     <div class="space-y-6">
-                        <div class="relative pl-6 border-l-2 border-slate-800 rtl:pl-0 rtl:pr-6 rtl:border-l-0 rtl:border-r-2">
-                            <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-blue-600 border-4 border-[#020617] rtl:-right-[9px]"></div>
-                            <div class="flex justify-between items-start mb-2">
-                                <h4 class="font-bold text-white">Syriatel Telecom - Senior Data Analyst</h4>
-                                <span class="text-[10px] text-slate-500">2021 - Present</span>
+                        <div class="relative pl-6 border-l-2 border-slate-800 rtl:pl-0 rtl:pr-6 rtl:border-l-0 rtl:border-r-2 print:border-slate-200">
+                            <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-blue-600 border-4 border-[#020617] rtl:-right-[9px] print:border-white"></div>
+                            <div class="flex flex-col sm:flex-row justify-between items-start mb-2 gap-1">
+                                <h4 class="font-bold text-white print:text-slate-900">Syriatel Telecom - Senior Data Analyst</h4>
+                                <span class="text-[10px] text-slate-500 font-bold">2021 - Present</span>
                             </div>
-                            <ul class="text-[11px] text-slate-400 space-y-2 list-disc list-inside">
+                            <ul class="text-[11px] text-slate-400 space-y-2 list-disc list-inside print:text-slate-600">
                                 <li data-en="Optimized SQL workflows for over 6M monthly records." data-ar="تحسين سير عمل SQL لأكثر من 6 ملايين سجل شهرياً.">Optimized SQL workflows for over 6M monthly records.</li>
                                 <li data-en="Automated 15+ complex reports using Python & VBA." data-ar="أتمتة أكثر من 15 تقريراً معقداً باستخدام بايثون وVBA.">Automated 15+ complex reports using Python & VBA.</li>
                                 <li data-en="Developed executive dashboards for KPI monitoring." data-ar="تطوير لوحات تحكم تنفيذية لمراقبة مؤشرات الأداء الرئيسية.">Developed executive dashboards for KPI monitoring.</li>
@@ -254,9 +281,9 @@
                 <section class="glass-card rounded-3xl p-8">
                     <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-4" data-en="Certifications" data-ar="الشهادات التدريبية">Certifications</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-[10px]">
-                        <div class="flex items-center gap-2 text-slate-300"><i class="fas fa-certificate text-blue-500"></i> Think Agile (2024)</div>
-                        <div class="flex items-center gap-2 text-slate-300"><i class="fas fa-certificate text-blue-500"></i> Advanced Excel (2023)</div>
-                        <div class="flex items-center gap-2 text-slate-300"><i class="fas fa-certificate text-blue-500"></i> Angular Dev (2022)</div>
+                        <div class="flex items-center gap-2 text-slate-300 print:text-slate-700 font-medium"><i class="fas fa-certificate text-blue-500 no-print"></i> Think Agile (2024)</div>
+                        <div class="flex items-center gap-2 text-slate-300 print:text-slate-700 font-medium"><i class="fas fa-certificate text-blue-500 no-print"></i> Advanced Excel (2023)</div>
+                        <div class="flex items-center gap-2 text-slate-300 print:text-slate-700 font-medium"><i class="fas fa-certificate text-blue-500 no-print"></i> Angular Dev (2022)</div>
                     </div>
                 </section>
             </div>
