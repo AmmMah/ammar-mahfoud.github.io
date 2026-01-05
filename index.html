@@ -18,6 +18,9 @@
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.3s ease;
+            height: 100%; /* توحيد الارتفاع */
+            display: flex;
+            flex-direction: column;
         }
 
         .project-img-container {
@@ -43,7 +46,6 @@
             color: #93c5fd;
         }
 
-        /* Progress Bar Styles */
         .progress-bar-container {
             height: 6px;
             background: rgba(255, 255, 255, 0.05);
@@ -55,17 +57,15 @@
             height: 100%;
             background: linear-gradient(90deg, #3b82f6, #60a5fa);
             border-radius: 10px;
-            transition: width 1s ease-in-out;
         }
 
         @media print {
             nav, .no-print { display: none !important; }
             body { background: white !important; color: black !important; padding: 0 !important; }
             main { pt: 0 !important; width: 100% !important; max-width: 100% !important; }
-            .glass-card { background: white !important; border: 1px solid #e2e8f0 !important; color: black !important; backdrop-filter: none !important; margin-bottom: 10px !important; }
+            .glass-card { background: white !important; border: 1px solid #e2e8f0 !important; color: black !important; backdrop-filter: none !important; height: auto !important; }
             .text-gradient { background: none !important; -webkit-text-fill-color: #1e40af !important; color: #1e40af !important; }
             .skill-badge { background: #f1f5f9 !important; border: 1px solid #cbd5e1 !important; color: #1e40af !important; }
-            .progress-bar-container { background: #e2e8f0 !important; border: 1px solid #cbd5e1; }
         }
 
         #copy-notification {
@@ -78,9 +78,7 @@
             border-radius: 10px;
             display: none;
             z-index: 1000;
-            animation: slideUp 0.3s ease;
         }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
     </style>
 </head>
 <body class="selection:bg-blue-500/30">
@@ -103,7 +101,7 @@
         <!-- Header -->
         <header class="mb-12 flex flex-col md:flex-row items-center md:items-end gap-8 text-center md:text-left rtl:md:text-right">
             <div class="relative group">
-                <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-blue-400 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-blue-400 rounded-full blur opacity-25"></div>
                 <img src="https://via.placeholder.com/150" alt="Ammar Mahfoud" id="profile-img" class="relative w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-[#020617] bg-slate-800">
             </div>
             <div class="flex-1">
@@ -114,73 +112,60 @@
                     <span class="text-white font-medium" data-en="Senior Data Analyst" data-ar="محلل بيانات أول">Senior Data Analyst</span> & 
                     <span class="text-white font-medium" data-en="Full-Stack Developer" data-ar="مطور تطبيقات">Full-Stack Developer</span>
                 </p>
-                
                 <div class="flex flex-wrap gap-3 justify-center md:justify-start items-center">
                     <button onclick="copyEmail()" class="flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-lg text-xs hover:bg-slate-800 transition-colors">
                         <i class="fas fa-envelope text-blue-500"></i> <span id="email-text">Ammar.in.en95@gmail.com</span> <i class="fas fa-copy text-[10px] opacity-50"></i>
                     </button>
-                    <a href="https://linkedin.com/in/ammar-mahfoud" target="_blank" class="bg-slate-900 border border-slate-800 p-2 rounded-lg text-blue-400 hover:text-white transition-colors">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="https://github.com/ammar-mahfoud" target="_blank" class="bg-slate-900 border border-slate-800 p-2 rounded-lg text-slate-400 hover:text-white transition-colors">
-                        <i class="fab fa-github"></i>
-                    </a>
+                    <a href="https://linkedin.com/in/ammar-mahfoud" target="_blank" class="bg-slate-900 border border-slate-800 p-2 rounded-lg text-blue-400 hover:text-white transition-colors"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/ammar-mahfoud" target="_blank" class="bg-slate-900 border border-slate-800 p-2 rounded-lg text-slate-400 hover:text-white transition-colors"><i class="fab fa-github"></i></a>
                     <span class="text-xs text-slate-500 flex items-center gap-2"><i class="fas fa-map-marker-alt"></i> <span data-en="Damascus, Syria" data-ar="دمشق، سوريا">Damascus, Syria</span></span>
                 </div>
             </div>
         </header>
 
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
             
-            <!-- Left Side: Skills with Progress Bars -->
-            <aside class="md:col-span-4 space-y-6">
-                <section class="glass-card rounded-3xl p-8">
+            <!-- Left Side -->
+            <aside class="md:col-span-4 flex flex-col gap-6">
+                <!-- Technical Arsenal with Progress Bars -->
+                <div class="glass-card rounded-3xl p-8">
                     <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-6" data-en="Technical Arsenal" data-ar="الترسانة التقنية">Technical Arsenal</h3>
                     <div class="space-y-6">
-                        <!-- SQL -->
                         <div>
-                            <div class="flex justify-between text-[10px] mb-1">
-                                <span class="text-slate-300 font-bold uppercase">SQL / T-SQL</span>
-                                <span class="text-blue-400">95%</span>
-                            </div>
+                            <div class="flex justify-between text-[10px] mb-1"><span class="text-slate-300 font-bold uppercase">SQL / T-SQL</span><span class="text-blue-400">95%</span></div>
                             <div class="progress-bar-container"><div class="progress-fill" style="width: 95%"></div></div>
                         </div>
-                        <!-- Power BI -->
                         <div>
-                            <div class="flex justify-between text-[10px] mb-1">
-                                <span class="text-slate-300 font-bold uppercase">Power BI / DAX</span>
-                                <span class="text-blue-400">90%</span>
-                            </div>
+                            <div class="flex justify-between text-[10px] mb-1"><span class="text-slate-300 font-bold uppercase">Power BI / DAX</span><span class="text-blue-400">90%</span></div>
                             <div class="progress-bar-container"><div class="progress-fill" style="width: 90%"></div></div>
                         </div>
-                        <!-- Python -->
                         <div>
-                            <div class="flex justify-between text-[10px] mb-1">
-                                <span class="text-slate-300 font-bold uppercase">Python (Automation)</span>
-                                <span class="text-blue-400">88%</span>
-                            </div>
+                            <div class="flex justify-between text-[10px] mb-1"><span class="text-slate-300 font-bold uppercase">Python (Automation)</span><span class="text-blue-400">88%</span></div>
                             <div class="progress-bar-container"><div class="progress-fill" style="width: 88%"></div></div>
                         </div>
-                        <!-- Excel/VBA -->
                         <div>
-                            <div class="flex justify-between text-[10px] mb-1">
-                                <span class="text-slate-300 font-bold uppercase">Excel / VBA</span>
-                                <span class="text-blue-400">95%</span>
-                            </div>
+                            <div class="flex justify-between text-[10px] mb-1"><span class="text-slate-300 font-bold uppercase">Excel / VBA</span><span class="text-blue-400">95%</span></div>
                             <div class="progress-bar-container"><div class="progress-fill" style="width: 95%"></div></div>
                         </div>
-                        <!-- Web Dev -->
                         <div>
-                            <div class="flex justify-between text-[10px] mb-1">
-                                <span class="text-slate-300 font-bold uppercase">Angular / React</span>
-                                <span class="text-blue-400">85%</span>
-                            </div>
+                            <div class="flex justify-between text-[10px] mb-1"><span class="text-slate-300 font-bold uppercase">Angular / React</span><span class="text-blue-400">85%</span></div>
                             <div class="progress-bar-container"><div class="progress-fill" style="width: 85%"></div></div>
                         </div>
                     </div>
-                </section>
+                </div>
 
-                <section class="glass-card rounded-3xl p-8">
+                <!-- Education -->
+                <div class="glass-card rounded-3xl p-8">
+                    <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-4" data-en="Education" data-ar="التعليم">Education</h3>
+                    <div class="text-xs">
+                        <p class="text-white font-bold" data-en="B.S. Software Engineering" data-ar="هندسة البرمجيات">B.S. Software Engineering</p>
+                        <p class="text-slate-500 mt-1">Tishreen University (2020)</p>
+                        <p class="text-blue-400 font-bold mt-1">GPA: 70.75%</p>
+                    </div>
+                </div>
+
+                <!-- Languages -->
+                <div class="glass-card rounded-3xl p-8">
                     <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-4" data-en="Languages" data-ar="اللغات">Languages</h3>
                     <div class="space-y-3 text-xs">
                         <div class="flex justify-between">
@@ -192,70 +177,55 @@
                             <span class="text-blue-400" data-en="Professional" data-ar="مستوى احترافي">Professional</span>
                         </div>
                     </div>
-                </section>
-
-                <section class="glass-card rounded-3xl p-8">
-                    <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-4" data-en="Education" data-ar="التعليم">Education</h3>
-                    <div class="text-xs">
-                        <p class="text-white font-bold" data-en="B.S. Software Engineering" data-ar="هندسة البرمجيات">B.S. Software Engineering</p>
-                        <p class="text-slate-500 mt-1">Tishreen University (2020)</p>
-                        <p class="text-blue-400 font-bold mt-1">GPA: 70.75%</p>
-                    </div>
-                </section>
+                </div>
             </aside>
 
-            <!-- Right Side: Projects & Experience -->
-            <div class="md:col-span-8 space-y-8">
-                
-                <!-- Main Project (Exchange) -->
+            <!-- Right Side -->
+            <div class="md:col-span-8 flex flex-col gap-8">
+                <!-- Main Project -->
                 <section>
-                    <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-6 flex items-center gap-2">
-                        <i class="fas fa-star"></i> <span data-en="Primary Project Showcase" data-ar="عرض المشروع الأساسي">Primary Project Showcase</span>
-                    </h3>
-                    <div class="glass-card rounded-3xl p-6">
+                    <div class="glass-card rounded-3xl p-8">
+                        <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-6 flex items-center gap-2">
+                            <i class="fas fa-star"></i> <span data-en="Primary Project Showcase" data-ar="عرض المشروع الأساسي">Primary Project Showcase</span>
+                        </h3>
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <div class="space-y-4">
                                 <h4 class="text-2xl font-bold text-white" data-en="Currency & Remittance System" data-ar="نظام الصرافة والحوالات">Currency & Remittance System</h4>
                                 <p class="text-sm text-slate-400 leading-relaxed" data-en="A robust management platform built to handle high-frequency currency exchange and remittance operations. Featuring real-time balance tracking and automated fee structures." data-ar="منصة إدارة قوية مصممة للتعامل مع عمليات الصرف والحوالات المتكررة. تتميز بتتبع الرصيد اللحظي وهياكل الرسوم المؤتمتة.">
-                                    A robust management platform built to handle high-frequency currency exchange and remittance operations.
+                                    A robust management platform built for currency exchange.
                                 </p>
                                 <div class="flex flex-wrap gap-2 pt-2">
                                     <span class="skill-badge">Angular</span>
                                     <span class="skill-badge">Supabase</span>
                                     <span class="skill-badge">Firebase Auth</span>
                                 </div>
-                                <div class="flex gap-4 pt-4 no-print">
-                                    <a href="#" class="text-blue-400 hover:text-white transition-colors text-xs font-bold flex items-center gap-1"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-                                    <a href="#" class="text-slate-500 hover:text-white transition-colors text-xs font-bold flex items-center gap-1"><i class="fab fa-github"></i> Codebase</a>
+                                <div class="flex gap-4 pt-4 no-print text-[10px] font-bold">
+                                    <a href="#" class="text-blue-400 hover:text-white transition-colors flex items-center gap-1"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                                    <a href="#" class="text-slate-500 hover:text-white transition-colors flex items-center gap-1"><i class="fab fa-github"></i> Codebase</a>
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 gap-2">
-                                <div class="project-img-container"><img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?q=80&w=400" alt="UI 1" class="w-full h-full object-cover"></div>
-                                <div class="project-img-container"><img src="https://images.unsplash.com/photo-1611974715853-268ee9c3468d?q=80&w=400" alt="UI 2" class="w-full h-full object-cover"></div>
+                                <div class="project-img-container"><img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?q=80&w=400" class="w-full h-full object-cover"></div>
+                                <div class="project-img-container"><img src="https://images.unsplash.com/photo-1611974715853-268ee9c3468d?q=80&w=400" class="w-full h-full object-cover"></div>
                                 <div class="col-span-2 project-img-container" style="aspect-ratio: 21/9;">
-                                    <img src="https://images.unsplash.com/photo-1551288049-bbbda536339a?q=80&w=800" alt="UI 3" class="w-full h-full object-cover">
+                                    <img src="https://images.unsplash.com/photo-1551288049-bbbda536339a?q=80&w=800" class="w-full h-full object-cover">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- Other Projects (Descriptions) -->
-                <section>
-                    <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-4 flex items-center gap-2">
-                        <i class="fas fa-list-ul"></i> <span data-en="Secondary Projects" data-ar="مشاريع برمجية أخرى">Secondary Projects</span>
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="glass-card rounded-2xl p-5">
-                            <h5 class="font-bold text-white text-sm mb-2" data-en="Kiosk Monitoring Tool" data-ar="أداة مراقبة الأكشاك">Kiosk Monitoring Tool</h5>
-                            <p class="text-[11px] text-slate-500 mb-3" data-en="Internal monitoring hub for Syriatel kiosks, optimizing reporting for hundreds of service points." data-ar="مركز مراقبة داخلي لأكشاك سيريتل، لتحسين التقارير لمئات نقاط الخدمة.">Internal monitoring hub for Syriatel kiosks.</p>
-                            <div class="flex gap-2"><span class="text-[9px] text-blue-400">ASP.NET</span><span class="text-[9px] text-blue-400">SQL Server</span></div>
-                        </div>
-                        <div class="glass-card rounded-2xl p-5">
-                            <h5 class="font-bold text-white text-sm mb-2" data-en="Python Data Pipeline" data-ar="خط معالجة بيانات بايثون">Python Data Pipeline</h5>
-                            <p class="text-[11px] text-slate-500 mb-3" data-en="Automated ETL scripts to handle 6M+ monthly records, reducing validation time by 75%." data-ar="سكربتات ETL مؤتمتة لمعالجة أكثر من 6 ملايين سجل شهرياً، مما قلل وقت التحقق بنسبة 75%.">Automated ETL scripts to handle 6M+ monthly records.</p>
-                            <div class="flex gap-2"><span class="text-[9px] text-blue-400">Python</span><span class="text-[9px] text-blue-400">Pandas</span></div>
-                        </div>
+                <!-- Secondary Projects -->
+                <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="glass-card rounded-2xl p-6">
+                        <h5 class="font-bold text-white text-sm mb-2" data-en="Kiosk Monitoring Tool" data-ar="أداة مراقبة الأكشاك">Kiosk Monitoring Tool</h5>
+                        <p class="text-[11px] text-slate-500 mb-3" data-en="Internal monitoring hub for Syriatel kiosks, optimizing reporting for hundreds of service points." data-ar="مركز مراقبة داخلي لأكشاك سيريتل، لتحسين التقارير لمئات نقاط الخدمة.">Internal monitoring hub for Syriatel kiosks.</p>
+                        <div class="flex gap-2"><span class="text-[9px] text-blue-400">ASP.NET</span><span class="text-[9px] text-blue-400">SQL Server</span></div>
+                    </div>
+                    <div class="glass-card rounded-2xl p-6">
+                        <h5 class="font-bold text-white text-sm mb-2" data-en="Python Data Pipeline" data-ar="خط معالجة بيانات بايثون">Python Data Pipeline</h5>
+                        <p class="text-[11px] text-slate-500 mb-3" data-en="Automated ETL scripts to handle 6M+ monthly records, reducing validation time by 75%." data-ar="سكربتات ETL مؤتمتة لمعالجة أكثر من 6 ملايين سجل شهرياً، مما قلل وقت التحقق بنسبة 75%.">Automated ETL scripts to handle 6M+ monthly records.</p>
+                        <div class="flex gap-2"><span class="text-[9px] text-blue-400">Python</span><span class="text-[9px] text-blue-400">Pandas</span></div>
                     </div>
                 </section>
 
@@ -274,6 +244,7 @@
                             <ul class="text-[11px] text-slate-400 space-y-2 list-disc list-inside">
                                 <li data-en="Optimized SQL workflows for over 6M monthly records." data-ar="تحسين سير عمل SQL لأكثر من 6 ملايين سجل شهرياً.">Optimized SQL workflows for over 6M monthly records.</li>
                                 <li data-en="Automated 15+ complex reports using Python & VBA." data-ar="أتمتة أكثر من 15 تقريراً معقداً باستخدام بايثون وVBA.">Automated 15+ complex reports using Python & VBA.</li>
+                                <li data-en="Developed executive dashboards for KPI monitoring." data-ar="تطوير لوحات تحكم تنفيذية لمراقبة مؤشرات الأداء الرئيسية.">Developed executive dashboards for KPI monitoring.</li>
                             </ul>
                         </div>
                     </div>
@@ -299,26 +270,14 @@
             document.body.classList.toggle('rtl', currentLang === 'ar');
             document.getElementById('lang-btn-text').innerText = currentLang === 'en' ? 'العربية' : 'English';
             document.getElementById('pdf-btn-text').innerText = currentLang === 'en' ? 'Download CV' : 'تحميل السيرة الذاتية';
-            document.querySelectorAll('[data-en]').forEach(el => {
-                el.innerText = el.getAttribute('data-' + currentLang);
-            });
+            document.querySelectorAll('[data-en]').forEach(el => { el.innerText = el.getAttribute('data-' + currentLang); });
         }
-
         async function copyEmail() {
             const email = document.getElementById('email-text').innerText;
-            try {
-                await navigator.clipboard.writeText(email);
-                const notification = document.getElementById('copy-notification');
-                notification.style.display = 'block';
-                setTimeout(() => notification.style.display = 'none', 2000);
-            } catch (err) {
-                const textArea = document.createElement("textarea");
-                textArea.value = email;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-            }
+            await navigator.clipboard.writeText(email);
+            const notification = document.getElementById('copy-notification');
+            notification.style.display = 'block';
+            setTimeout(() => notification.style.display = 'none', 2000);
         }
     </script>
 </body>
