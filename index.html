@@ -93,6 +93,7 @@
             .project-img-container { border: 1px solid #e2e8f0 !important; }
             aside { break-inside: avoid; }
             section { break-inside: avoid; }
+            img { border: 1px solid #e2e8f0 !important; }
         }
 
         #copy-notification {
@@ -129,7 +130,10 @@
         <header class="mb-12 flex flex-col md:flex-row items-center md:items-end gap-8 text-center md:text-left rtl:md:text-right">
             <div class="relative group">
                 <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-blue-400 rounded-full blur opacity-25 no-print"></div>
-                <img src="https://via.placeholder.com/150" alt="Ammar Mahfoud" id="profile-img" class="relative w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-[#020617] bg-slate-800 print:border-slate-200">
+                <!-- التغيير هنا: قمت بتغيير مسار الصورة ليكون profile.jpg -->
+                <img src="profile.jpg" alt="Ammar Mahfoud" id="profile-img" 
+                     onerror="this.src='https://ui-avatars.com/api/?name=Ammar+Mahfoud&background=0D8ABC&color=fff&size=256'"
+                     class="relative w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-[#020617] bg-slate-800 print:border-slate-200">
             </div>
             <div class="flex-1">
                 <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-2">
@@ -242,20 +246,6 @@
                     </div>
                 </section>
 
-                <!-- Secondary Projects -->
-                <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="glass-card rounded-2xl p-6">
-                        <h5 class="font-bold text-white text-sm mb-2 print:text-slate-900" data-en="Kiosk Monitoring Tool" data-ar="أداة مراقبة الأكشاك">Kiosk Monitoring Tool</h5>
-                        <p class="text-[11px] text-slate-500 mb-3" data-en="Internal monitoring hub for Syriatel kiosks, optimizing reporting for hundreds of service points." data-ar="مركز مراقبة داخلي لأكشاك سيريتل، لتحسين التقارير لمئات نقاط الخدمة.">Internal monitoring hub for Syriatel kiosks.</p>
-                        <div class="flex gap-2"><span class="text-[9px] text-blue-500 font-bold">ASP.NET</span><span class="text-[9px] text-blue-500 font-bold">SQL Server</span></div>
-                    </div>
-                    <div class="glass-card rounded-2xl p-6">
-                        <h5 class="font-bold text-white text-sm mb-2 print:text-slate-900" data-en="Python Data Pipeline" data-ar="خط معالجة بيانات بايثون">Python Data Pipeline</h5>
-                        <p class="text-[11px] text-slate-500 mb-3" data-en="Automated ETL scripts to handle 6M+ monthly records, reducing validation time by 75%." data-ar="سكربتات ETL مؤتمتة لمعالجة أكثر من 6 ملايين سجل شهرياً، مما قلل وقت التحقق بنسبة 75%.">Automated ETL scripts to handle 6M+ monthly records.</p>
-                        <div class="flex gap-2"><span class="text-[9px] text-blue-500 font-bold">Python</span><span class="text-[9px] text-blue-500 font-bold">Pandas</span></div>
-                    </div>
-                </section>
-
                 <!-- Experience -->
                 <section class="glass-card rounded-3xl p-8">
                     <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-6 flex items-center gap-2">
@@ -276,16 +266,6 @@
                         </div>
                     </div>
                 </section>
-
-                <!-- Certifications -->
-                <section class="glass-card rounded-3xl p-8">
-                    <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-4" data-en="Certifications" data-ar="الشهادات التدريبية">Certifications</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-[10px]">
-                        <div class="flex items-center gap-2 text-slate-300 print:text-slate-700 font-medium"><i class="fas fa-certificate text-blue-500 no-print"></i> Think Agile (2024)</div>
-                        <div class="flex items-center gap-2 text-slate-300 print:text-slate-700 font-medium"><i class="fas fa-certificate text-blue-500 no-print"></i> Advanced Excel (2023)</div>
-                        <div class="flex items-center gap-2 text-slate-300 print:text-slate-700 font-medium"><i class="fas fa-certificate text-blue-500 no-print"></i> Angular Dev (2022)</div>
-                    </div>
-                </section>
             </div>
         </div>
     </main>
@@ -301,7 +281,14 @@
         }
         async function copyEmail() {
             const email = document.getElementById('email-text').innerText;
-            await navigator.clipboard.writeText(email);
+            // Use fallback for clipboard in iframes
+            const tempInput = document.createElement("input");
+            tempInput.value = email;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            
             const notification = document.getElementById('copy-notification');
             notification.style.display = 'block';
             setTimeout(() => notification.style.display = 'none', 2000);
