@@ -29,6 +29,7 @@
             border-radius: 1rem;
             aspect-ratio: 16/9;
             background: #1e293b;
+            cursor: pointer;
         }
 
         .text-gradient {
@@ -59,10 +60,26 @@
             border-radius: 10px;
         }
 
-        /* تحسينات الطباعة لضمان PDF احترافي */
+        /* Lightbox Gallery Styles */
+        #lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        #lightbox-img {
+            max-width: 90%;
+            max-height: 80vh;
+            border-radius: 12px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.5);
+        }
+
         @media print {
             @page { margin: 1.5cm; }
-            nav, .no-print, #copy-notification { display: none !important; }
+            nav, .no-print, #copy-notification, #lightbox { display: none !important; }
             body { background: white !important; color: #1e293b !important; padding: 0 !important; }
             main { padding-top: 0 !important; width: 100% !important; max-width: 100% !important; }
             .glass-card { 
@@ -111,6 +128,18 @@
 </head>
 <body class="selection:bg-blue-500/30">
 
+    <!-- Lightbox -->
+    <div id="lightbox" class="no-print" onclick="this.style.display='none'">
+        <div class="relative flex flex-col items-center gap-6" onclick="event.stopPropagation()">
+            <button onclick="document.getElementById('lightbox').style.display='none'" class="absolute -top-12 right-0 text-white text-3xl hover:text-blue-400 transition-colors">&times;</button>
+            <img id="lightbox-img" src="" alt="Preview">
+            <div class="flex gap-8">
+                <button onclick="changeImage(-1)" class="bg-white/10 p-4 rounded-full hover:bg-white/20 text-white transition-all"><i class="fas fa-chevron-left"></i></button>
+                <button onclick="changeImage(1)" class="bg-white/10 p-4 rounded-full hover:bg-white/20 text-white transition-all"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+
     <div id="copy-notification">Copied to clipboard!</div>
 
     <nav class="fixed top-0 w-full z-50 no-print px-6 py-4 flex justify-center">
@@ -130,7 +159,6 @@
         <header class="mb-12 flex flex-col md:flex-row items-center md:items-end gap-8 text-center md:text-left rtl:md:text-right">
             <div class="relative group">
                 <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-blue-400 rounded-full blur opacity-25 no-print"></div>
-                <!-- التغيير هنا: قمت بتغيير مسار الصورة ليكون profile.jpg -->
                 <img src="profile.jpg" alt="Ammar Mahfoud" id="profile-img" 
                      onerror="this.src='https://ui-avatars.com/api/?name=Ammar+Mahfoud&background=0D8ABC&color=fff&size=256'"
                      class="relative w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-[#020617] bg-slate-800 print:border-slate-200">
@@ -236,15 +264,43 @@
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 gap-2">
-                                <div class="project-img-container"><img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?q=80&w=400" class="w-full h-full object-cover"></div>
-                                <div class="project-img-container"><img src="https://images.unsplash.com/photo-1611974715853-268ee9c3468d?q=80&w=400" class="w-full h-full object-cover"></div>
-                                <div class="col-span-2 project-img-container" style="aspect-ratio: 21/9;">
-                                    <img src="https://images.unsplash.com/photo-1551288049-bbbda536339a?q=80&w=800" class="w-full h-full object-cover">
+                                <div class="project-img-container" onclick="openGallery(0)"><img src="ex-1.jpg" onerror="this.src='https://images.unsplash.com/photo-1580519327913-94c5bb22b281?q=80&w=400'" class="w-full h-full object-cover"></div>
+                                <div class="project-img-container" onclick="openGallery(1)"><img src="ex-2.jpg" onerror="this.src='https://images.unsplash.com/photo-1611974715853-268ee9c3468d?q=80&w=400'" class="w-full h-full object-cover"></div>
+                                <div class="col-span-2 project-img-container" style="aspect-ratio: 21/9;" onclick="openGallery(2)">
+                                    <img src="ex-3.jpg" onerror="this.src='https://images.unsplash.com/photo-1551288049-bbbda536339a?q=80&w=800'" class="w-full h-full object-cover">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
+
+                <!-- Secondary Projects -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="glass-card rounded-3xl p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-blue-600/20 flex items-center justify-center text-blue-400"><i class="fas fa-desktop"></i></div>
+                            <span class="text-[10px] font-bold text-slate-500 uppercase">Desktop App</span>
+                        </div>
+                        <h4 class="font-bold text-white mb-2 print:text-slate-900" data-en="Kiosk Management System" data-ar="نظام إدارة الكيوسك">Kiosk Management System</h4>
+                        <p class="text-[11px] text-slate-400 leading-relaxed mb-4 print:text-slate-600" data-en="A C# .NET solution for touch-screen service kiosks with integrated hardware support." data-ar="حل برمجي بلغة C# .NET لأكشاك الخدمة التي تعمل باللمس مع دعم متكامل للأجهزة.">A C# .NET solution for touch-screen service kiosks.</p>
+                        <div class="flex flex-wrap gap-2 mt-auto">
+                            <span class="skill-badge">C# .NET</span>
+                            <span class="skill-badge">SQL Server</span>
+                        </div>
+                    </div>
+                    <div class="glass-card rounded-3xl p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-blue-600/20 flex items-center justify-center text-blue-400"><i class="fas fa-database"></i></div>
+                            <span class="text-[10px] font-bold text-slate-500 uppercase">Data Pipeline</span>
+                        </div>
+                        <h4 class="font-bold text-white mb-2 print:text-slate-900" data-en="ETL Automation Pipeline" data-ar="خط أتمتة ETL">ETL Automation Pipeline</h4>
+                        <p class="text-[11px] text-slate-400 leading-relaxed mb-4 print:text-slate-600" data-en="Custom Python scripts to extract, transform, and load massive datasets into warehouse environments." data-ar="سكربتات بايثون مخصصة لاستخراج وتحويل وتحميل مجموعات البيانات الضخمة في بيئات المستودعات.">Custom Python scripts for data transformation.</p>
+                        <div class="flex flex-wrap gap-2 mt-auto">
+                            <span class="skill-badge">Python</span>
+                            <span class="skill-badge">Pandas</span>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Experience -->
                 <section class="glass-card rounded-3xl p-8">
@@ -272,6 +328,13 @@
 
     <script>
         let currentLang = 'en';
+        let currentImgIdx = 0;
+        const projectImages = [
+            'https://images.unsplash.com/photo-1580519327913-94c5bb22b281?q=80&w=1200',
+            'https://images.unsplash.com/photo-1611974715853-268ee9c3468d?q=80&w=1200',
+            'https://images.unsplash.com/photo-1551288049-bbbda536339a?q=80&w=1200'
+        ];
+
         function toggleLanguage() {
             currentLang = currentLang === 'en' ? 'ar' : 'en';
             document.body.classList.toggle('rtl', currentLang === 'ar');
@@ -279,20 +342,42 @@
             document.getElementById('pdf-btn-text').innerText = currentLang === 'en' ? 'Download CV' : 'تحميل السيرة الذاتية';
             document.querySelectorAll('[data-en]').forEach(el => { el.innerText = el.getAttribute('data-' + currentLang); });
         }
+        
         async function copyEmail() {
             const email = document.getElementById('email-text').innerText;
-            // Use fallback for clipboard in iframes
             const tempInput = document.createElement("input");
             tempInput.value = email;
             document.body.appendChild(tempInput);
             tempInput.select();
             document.execCommand("copy");
             document.body.removeChild(tempInput);
-            
             const notification = document.getElementById('copy-notification');
             notification.style.display = 'block';
             setTimeout(() => notification.style.display = 'none', 2000);
         }
+
+        // Gallery Functions
+        function openGallery(idx) {
+            currentImgIdx = idx;
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            img.src = projectImages[currentImgIdx];
+            lightbox.style.display = 'flex';
+        }
+
+        function changeImage(dir) {
+            currentImgIdx = (currentImgIdx + dir + projectImages.length) % projectImages.length;
+            document.getElementById('lightbox-img').src = projectImages[currentImgIdx];
+        }
+
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('lightbox').style.display === 'flex') {
+                if (e.key === 'ArrowRight') changeImage(1);
+                if (e.key === 'ArrowLeft') changeImage(-1);
+                if (e.key === 'Escape') document.getElementById('lightbox').style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
