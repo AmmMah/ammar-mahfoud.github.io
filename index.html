@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="html-tag">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+Arabic:wght@300;400;700&display=swap');
         
         :root {
             --primary: #3b82f6;
@@ -21,17 +21,13 @@
             scroll-behavior: smooth;
         }
 
+        body.rtl { font-family: 'Noto Sans Arabic', sans-serif; direction: rtl; }
+
         .glass-card {
             background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .glass-card:hover {
-            border-color: rgba(59, 130, 246, 0.4);
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s ease;
         }
 
         .text-gradient {
@@ -40,130 +36,90 @@
             -webkit-text-fill-color: transparent;
         }
 
+        .progress-bar {
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, #3b82f6, #60a5fa);
+            border-radius: 10px;
+            transition: width 1s ease-in-out;
+        }
+
+        .project-hero-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 20px;
+            background: #1e293b;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
         .profile-ring {
             position: relative;
-            padding: 5px;
-            background: linear-gradient(45deg, #3b82f6, #60a5fa);
+            padding: 4px;
+            background: linear-gradient(45deg, #3b82f6, transparent, #60a5fa);
             border-radius: 50%;
-            animation: pulse-ring 3s infinite;
         }
-
-        @keyframes pulse-ring {
-            0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(59, 130, 246, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
-        }
-
-        .fade-in {
-            animation: fadeIn 1s ease-out forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .copy-toast {
-            visibility: hidden;
-            min-width: 200px;
-            background-color: #3b82f6;
-            color: #fff;
-            text-align: center;
-            border-radius: 50px;
-            padding: 10px;
-            position: fixed;
-            z-index: 100;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 14px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        }
-
-        .copy-toast.show {
-            visibility: visible;
-            animation: fadein_toast 0.5s, fadeout_toast 0.5s 2.5s;
-        }
-
-        @keyframes fadein_toast { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
-        @keyframes fadeout_toast { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
 
         @media print {
-            body { background-color: white !important; color: black !important; }
-            .no-print { display: none !important; }
+            nav, .no-print { display: none !important; }
+            body { background: white !important; color: black !important; }
             .glass-card { 
                 background: white !important; 
-                border: 1px solid #e2e8f0 !important;
+                border: 1px solid #ddd !important; 
                 color: black !important;
                 backdrop-filter: none !important;
                 box-shadow: none !important;
-                transform: none !important;
             }
-            .text-gradient { 
-                -webkit-text-fill-color: #1e40af !important; 
-                color: #1e40af !important;
-                font-weight: bold; 
-            }
-            .print-text-dark { color: #0f172a !important; }
-            .print-text-muted { color: #475569 !important; }
-            a { text-decoration: none !important; color: black !important; }
-            .profile-ring { background: none; padding: 0; animation: none; }
-            @page { margin: 1cm; }
+            .text-gradient { -webkit-text-fill-color: #1e40af !important; }
+            .progress-bar { border: 1px solid #ccc !important; }
+            .progress-fill { background: #3b82f6 !important; }
+            @page { size: auto; margin: 1cm; }
         }
     </style>
 </head>
 <body class="selection:bg-blue-500/30">
 
-    <div id="toast" class="copy-toast">Email Copied to Clipboard!</div>
-
-    <!-- Actions Bar -->
-    <nav class="fixed top-0 w-full z-50 no-print px-6 py-4 flex justify-center pointer-events-none">
-        <div class="max-w-5xl w-full flex justify-end gap-3 pointer-events-auto">
-            <button onclick="handleDownload()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-full font-bold shadow-lg shadow-blue-900/20 transition-all flex items-center gap-2 group">
-                <i class="fas fa-file-pdf group-hover:scale-110 transition-transform"></i> Save PDF
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full z-50 no-print px-6 py-4 flex justify-center">
+        <div class="max-w-5xl w-full flex justify-between gap-3">
+            <button onclick="toggleLanguage()" class="bg-slate-800/80 hover:bg-slate-700 text-white px-5 py-2 rounded-full font-bold backdrop-blur-md border border-white/10 transition-all flex items-center gap-2">
+                <i class="fas fa-globe"></i> <span id="lang-btn-text">العربية</span>
+            </button>
+            <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full font-bold shadow-lg transition-all flex items-center gap-2">
+                <i class="fas fa-file-pdf"></i> <span id="pdf-btn-text">Download CV</span>
             </button>
         </div>
     </nav>
 
-    <main class="max-w-5xl mx-auto pt-24 pb-20 px-6 fade-in">
+    <main class="max-w-5xl mx-auto pt-24 pb-20 px-6">
         
         <!-- Header Section -->
-        <header class="mb-16">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-8">
-                <div class="flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
-                    <div class="profile-ring">
-                        <img src="profile.jpg" alt="Ammar Mahfoud" onerror="this.src='https://ui-avatars.com/api/?name=Ammar+Mahfoud&background=3b82f6&color=fff&size=160'" class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-[#020617]">
-                    </div>
-                    
-                    <div>
-                        <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-4">
-                            Ammar <span class="text-gradient">Mahfoud</span>
-                        </h1>
-                        <p class="text-xl md:text-2xl text-slate-400 font-light max-w-2xl leading-relaxed">
-                            <span class="text-white font-medium print-text-dark">Data Analyst</span> & BI Specialist. <br class="hidden md:block">
-                            Bridging the gap between <span class="text-white font-medium print-text-dark">Raw Data</span> and <span class="text-white font-medium print-text-dark">Business Strategy</span>.
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="flex flex-col gap-3 text-slate-400 text-sm glass-card p-6 rounded-2xl md:bg-transparent md:border-none md:p-0">
-                    <div class="flex items-center justify-between md:justify-start gap-4">
-                        <a href="mailto:Ammar.in.en95@gmail.com" class="hover:text-blue-400 flex items-center gap-3 transition-colors print-text-dark">
-                            <i class="fas fa-envelope w-5 text-blue-500"></i> Ammar.in.en95@gmail.com
-                        </a>
-                        <button onclick="copyToClipboard('Ammar.in.en95@gmail.com')" class="no-print text-slate-600 hover:text-white p-1" title="Copy Email">
-                            <i class="fas fa-copy"></i>
-                        </button>
-                    </div>
-                    <a href="tel:+963988483821" class="hover:text-blue-400 flex items-center gap-3 transition-colors print-text-dark">
-                        <i class="fas fa-phone w-5 text-blue-500"></i> +963 988 483 821
-                    </a>
-                    <span class="flex items-center gap-3 print-text-dark">
-                        <i class="fas fa-location-dot w-5 text-blue-500"></i> Syria, Latakia
-                    </span>
-                    <div class="flex gap-4 mt-2 no-print">
-                        <a href="https://linkedin.com/in/ammar-mahfoud" target="_blank" class="text-slate-500 hover:text-white transition-colors"><i class="fab fa-linkedin text-2xl"></i></a>
-                        <a href="https://github.com/ammar-mahfoud" target="_blank" class="text-slate-500 hover:text-white transition-colors"><i class="fab fa-github text-2xl"></i></a>
+        <header class="mb-16 flex flex-col md:flex-row items-center md:items-end gap-8 text-center md:text-left rtl:md:text-right">
+            <div class="profile-ring no-print">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Ammar" alt="Ammar Mahfoud" class="w-32 h-32 md:w-40 md:h-40 rounded-full bg-slate-800 object-cover border-4 border-[#020617]">
+            </div>
+            <div class="flex-1">
+                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-4">
+                    <span data-en="Ammar" data-ar="عمار">Ammar</span> <span class="text-gradient" data-en="Mahfoud" data-ar="محفوظ">Mahfoud</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-slate-400 font-light mb-6">
+                    <span class="text-white font-medium" data-en="Data Analyst" data-ar="محلل بيانات">Data Analyst</span> & 
+                    <span class="text-white font-medium" data-en="Full-Stack Developer" data-ar="مطور تطبيقات">Full-Stack Developer</span>
+                </p>
+                <div class="flex flex-wrap gap-4 md:gap-6 text-slate-400 text-sm justify-center md:justify-start items-center">
+                    <span class="flex items-center gap-2"><i class="fas fa-location-dot text-blue-500"></i> <span data-en="Damascus, Syria" data-ar="دمشق، سوريا">Damascus, Syria</span></span>
+                    <a href="mailto:Ammar.in.en95@gmail.com" class="hover:text-white flex items-center gap-2 transition-colors"><i class="fas fa-envelope text-blue-500"></i> Ammar.in.en95@gmail.com</a>
+                    <span class="flex items-center gap-2"><i class="fas fa-phone text-blue-500"></i> +963 988 483 821</span>
+                    <div class="flex gap-4 no-print border-l border-slate-800 pl-4 rtl:border-l-0 rtl:border-r rtl:pr-4">
+                        <a href="https://linkedin.com/in/ammar-mahfoud" target="_blank" class="hover:text-white transition-colors text-lg"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/ammar-mahfoud" target="_blank" class="hover:text-white transition-colors text-lg"><i class="fab fa-github"></i></a>
                     </div>
                 </div>
             </div>
@@ -171,136 +127,128 @@
 
         <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
             
-            <!-- Key Achievements -->
-            <section class="md:col-span-8 glass-card rounded-3xl p-8 md:p-10">
-                <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-8">Executive Impact</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-10">
-                    <div class="group">
-                        <div class="text-4xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors print-text-dark">5+ Years</div>
-                        <h4 class="text-sm font-bold uppercase tracking-wide text-slate-500 mb-2">Telecom Domain Expert</h4>
-                        <p class="text-slate-400 text-sm leading-relaxed print-text-muted">Mastering high-volume datasets at <span class="text-white print-text-dark">Syriatel</span> with focus on data integrity and real-time BI reporting.</p>
+            <!-- Summary / Impact -->
+            <section class="md:col-span-8 glass-card rounded-3xl p-8">
+                <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-6" data-en="Professional Summary" data-ar="ملخص مهني">Professional Summary</h3>
+                <p class="text-slate-300 leading-relaxed mb-8" data-en="Strategic Data Analyst with 5+ years at Syriatel, specializing in transforming massive datasets into actionable business intelligence. Transitioned into Full-Stack development to build data-driven applications that enhance corporate decision-making." data-ar="محلل بيانات استراتيجي بخبرة تزيد عن 5 سنوات في شركة سيريتل، متخصص في تحويل مجموعات البيانات الضخمة إلى ذكاء أعمال قابل للتنفيذ. انتقلت إلى تطوير التطبيقات الكاملة (Full-Stack) لبناء حلول برمجية تعتمد على البيانات لتعزيز اتخاذ القرار المؤسساتي.">
+                    Strategic Data Analyst with 5+ years at Syriatel, specializing in transforming massive datasets into actionable business intelligence. Transitioned into Full-Stack development to build data-driven applications that enhance corporate decision-making.
+                </p>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-6 border-t border-white/5 pt-8">
+                    <div>
+                        <div class="text-2xl font-bold text-white">5+</div>
+                        <div class="text-[10px] text-slate-500 uppercase font-bold" data-en="Years Exp" data-ar="سنوات خبرة">Years Exp</div>
                     </div>
-                    <div class="group">
-                        <div class="text-4xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors print-text-dark">85%</div>
-                        <h4 class="text-sm font-bold uppercase tracking-wide text-slate-500 mb-2">Process Automation</h4>
-                        <p class="text-slate-400 text-sm leading-relaxed print-text-muted">Drastically cut manual labor hours by developing automated SQL validation scripts and VBA macros.</p>
+                    <div>
+                        <div class="text-2xl font-bold text-white">6M+</div>
+                        <div class="text-[10px] text-slate-500 uppercase font-bold" data-en="Records Handled" data-ar="سجل بيانات">Records Handled</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-white">85%</div>
+                        <div class="text-[10px] text-slate-500 uppercase font-bold" data-en="Automation" data-ar="نسبة الأتمتة">Automation</div>
                     </div>
                 </div>
             </section>
 
-            <!-- Tech Stack -->
+            <!-- Skills with Progress Bars -->
             <aside class="md:col-span-4 glass-card rounded-3xl p-8">
-                <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-6">Technical Arsenal</h3>
-                <div class="space-y-6">
+                <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-8" data-en="Technical Arsenal" data-ar="الترسانة التقنية">Technical Arsenal</h3>
+                <div class="space-y-5">
                     <div>
-                        <p class="text-[10px] text-slate-500 font-bold uppercase mb-4">Analytics & BI</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1.5 bg-slate-800 rounded-lg text-xs font-semibold print-text-dark border border-slate-700">Power BI</span>
-                            <span class="px-3 py-1.5 bg-slate-800 rounded-lg text-xs font-semibold print-text-dark border border-slate-700">SQL Server</span>
-                            <span class="px-3 py-1.5 bg-slate-800 rounded-lg text-xs font-semibold print-text-dark border border-slate-700">Python</span>
-                        </div>
+                        <div class="flex justify-between text-[11px] mb-1"><span>SQL / T-SQL</span><span class="text-blue-400">95%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 95%"></div></div>
                     </div>
                     <div>
-                        <p class="text-[10px] text-slate-500 font-bold uppercase mb-4">Core Strengths</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1.5 bg-blue-600/10 text-blue-400 rounded-lg text-xs font-semibold print-text-dark border border-blue-500/20">Data Modeling</span>
-                            <span class="px-3 py-1.5 bg-blue-600/10 text-blue-400 rounded-lg text-xs font-semibold print-text-dark border border-blue-500/20">KPI Design</span>
-                            <span class="px-3 py-1.5 bg-blue-600/10 text-blue-400 rounded-lg text-xs font-semibold print-text-dark border border-blue-500/20">VBA / Excel</span>
-                        </div>
+                        <div class="flex justify-between text-[11px] mb-1"><span>Angular / React</span><span class="text-blue-400">90%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 90%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-[11px] mb-1"><span>C# / ASP.NET API</span><span class="text-blue-400">85%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 85%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-[11px] mb-1"><span>Power BI (DAX)</span><span class="text-blue-400">92%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 92%"></div></div>
                     </div>
                 </div>
             </aside>
 
-            <!-- Projects Section -->
-            <section class="md:col-span-12 glass-card rounded-3xl p-8 md:p-10">
-                <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-8">Selected Projects</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-blue-500/30 transition-all group">
-                        <i class="fas fa-chart-line text-blue-500 mb-4 text-2xl group-hover:scale-110 transition-transform"></i>
-                        <h4 class="font-bold text-white mb-2 print-text-dark">Churn Analysis Engine</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed print-text-muted">Built a predictive SQL model to identify customers at risk of leaving, using historical usage patterns.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-blue-500/30 transition-all group">
-                        <i class="fas fa-robot text-blue-500 mb-4 text-2xl group-hover:scale-110 transition-transform"></i>
-                        <h4 class="font-bold text-white mb-2 print-text-dark">Report Automator</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed print-text-muted">An integrated VBA & SQL tool that generates complex monthly financial reports in seconds instead of days.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-blue-500/30 transition-all group">
-                        <i class="fas fa-project-diagram text-blue-500 mb-4 text-2xl group-hover:scale-110 transition-transform"></i>
-                        <h4 class="font-bold text-white mb-2 print-text-dark">BI Strategy Hub</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed print-text-muted">Standardized KPI measurements across departments using centralized Power BI data flows.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Experience Record -->
-            <section class="md:col-span-12 glass-card rounded-3xl p-8 md:p-10">
-                <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-10">Professional Journey</h3>
-                <div class="relative pl-8 md:pl-12 border-l-2 border-slate-800">
-                    <div class="absolute -left-[9px] top-0 w-4 h-4 bg-blue-500 rounded-full border-4 border-[#020617] shadow-[0_0_15px_#3b82f6]"></div>
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                        <div>
-                            <h4 class="text-2xl font-bold text-white print-text-dark">Data Analyst | BI Specialist</h4>
-                            <p class="text-blue-400 font-semibold">Syriatel Telecom Company</p>
+            <!-- Featured Project -->
+            <section class="md:col-span-12 glass-card rounded-3xl p-8 md:p-10 border-blue-500/20">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <span class="bg-blue-600/20 text-blue-400 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-4 inline-block" data-en="Featured Project" data-ar="مشروع مميز">Featured Project</span>
+                        <h2 class="text-3xl font-bold text-white mb-4" data-en="Currency & Remittance App" data-ar="تطبيق الصرافة والحوالات">Currency & Remittance App</h2>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6" data-en="Professional exchange platform built with Angular, integrating Supabase for data and Firebase for hosting. Includes real-time tracking and secure management." data-ar="منصة صرافة احترافية بنيت بـ Angular، مع دمج Supabase للبيانات و Firebase للاستضافة. تتضمن تتبعاً فورياً وإدارة آمنة.">
+                            Professional exchange platform built with Angular, integrating Supabase for data and Firebase for hosting. Includes real-time tracking and secure management.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-slate-800 rounded text-[10px] border border-slate-700">Angular</span>
+                            <span class="px-2 py-1 bg-slate-800 rounded text-[10px] border border-slate-700">Supabase</span>
+                            <span class="px-2 py-1 bg-slate-800 rounded text-[10px] border border-slate-700">Firebase</span>
                         </div>
-                        <span class="px-4 py-1.5 bg-slate-900 rounded-full text-xs font-bold text-slate-400 border border-slate-800 print-text-muted">2021 — PRESENT</span>
                     </div>
-                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-5 text-slate-400 text-sm leading-relaxed">
-                        <li class="flex gap-4"><span class="text-blue-500 font-bold">01</span><span>Processed datasets of <strong class="text-white print-text-dark">6M+ records</strong> with optimized SQL performance.</span></li>
-                        <li class="flex gap-4"><span class="text-blue-500 font-bold">02</span><span>Developed <strong class="text-white print-text-dark">20+ Power BI dashboards</strong> with advanced DAX for executive reporting.</span></li>
-                        <li class="flex gap-4"><span class="text-blue-500 font-bold">03</span><span>Cut reporting time by <strong class="text-white print-text-dark">85%</strong> through custom SQL/VBA automation.</span></li>
-                        <li class="flex gap-4"><span class="text-blue-500 font-bold">04</span><span>Applied <strong class="text-white print-text-dark">Agile Scrum</strong> methodologies in team collaborations.</span></li>
-                    </ul>
+                    <div class="relative group cursor-pointer">
+                        <img src="https://images.unsplash.com/photo-1580519542036-c47de6196ba5?auto=format&fit=crop&q=80&w=800" alt="App Screenshot" class="project-hero-img shadow-2xl group-hover:opacity-80 transition-all">
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <span class="bg-blue-600 text-white px-4 py-2 rounded-full text-xs font-bold" data-en="View Gallery" data-ar="عرض المعرض">View Gallery</span>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <!-- Education -->
-            <section class="md:col-span-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="glass-card rounded-3xl p-8">
-                    <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-4">Academic Background</h3>
-                    <h4 class="text-lg font-bold text-white print-text-dark">B.Sc. Software Engineering</h4>
-                    <p class="text-slate-400 text-sm">Tishreen University, 2020 | GPA: 70.75%</p>
-                </div>
-                <div class="glass-card rounded-3xl p-8">
-                    <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-4">Training & Mastery</h3>
-                    <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="px-3 py-1 bg-blue-600/10 text-blue-400 border border-blue-500/20 rounded-full text-xs font-bold">Think Agile (2024)</span>
-                        <span class="px-3 py-1 bg-blue-600/10 text-blue-400 border border-blue-500/20 rounded-full text-xs font-bold">Excel VBA (2023)</span>
-                        <span class="px-3 py-1 bg-blue-600/10 text-blue-400 border border-blue-500/20 rounded-full text-xs font-bold">Angular (2022)</span>
+            <!-- Enterprise & ETL -->
+            <section class="md:col-span-12 glass-card rounded-3xl p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div>
+                        <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-6" data-en="Corporate Systems" data-ar="الأنظمة المؤسساتية">Corporate Systems</h3>
+                        <div class="space-y-6">
+                            <div class="border-l-2 border-blue-500/30 pl-4 rtl:border-l-0 rtl:border-r-2 rtl:pr-4">
+                                <h4 class="font-bold text-white mb-1">Kiosk Web Report</h4>
+                                <p class="text-xs text-slate-400" data-en="Internal monitoring and reporting tools using Angular & ASP.NET." data-ar="أدوات مراقبة وتقارير داخلية باستخدام Angular و ASP.NET.">Internal monitoring and reporting tools using Angular & ASP.NET.</p>
+                            </div>
+                            <div class="border-l-2 border-slate-800 pl-4 rtl:border-l-0 rtl:border-r-2 rtl:pr-4">
+                                <h4 class="font-bold text-white mb-1" data-en="ETL Pipelines" data-ar="خطوط نقل البيانات (ETL)">ETL Pipelines</h4>
+                                <p class="text-xs text-slate-400" data-en="Designing robust ETL flows and automating database backups for telecom data." data-ar="تصميم تدفقات ETL متينة وأتمتة النسخ الاحتياطي لبيانات الاتصالات.">Designing robust ETL flows and automating database backups for telecom data.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-6" data-en="Education & Certs" data-ar="التعليم والشهادات">Education & Certs</h3>
+                        <div class="space-y-4 text-xs">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <p class="text-white font-bold" data-en="B.S. Software Engineering" data-ar="إجازة في هندسة البرمجيات">B.S. Software Engineering</p>
+                                    <p class="text-slate-500">Tishreen University (2020)</p>
+                                </div>
+                                <span class="text-blue-400 font-bold">70.75%</span>
+                            </div>
+                            <div class="pt-4 border-t border-white/5 space-y-2">
+                                <div class="flex items-center gap-2"><i class="fas fa-certificate text-blue-500"></i> Think Agile (2024)</div>
+                                <div class="flex items-center gap-2"><i class="fas fa-certificate text-blue-500"></i> Advanced Excel Specialist (2023)</div>
+                                <div class="flex items-center gap-2"><i class="fas fa-certificate text-blue-500"></i> Angular Development (2022)</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
         </div>
 
-        <footer class="mt-20 pt-10 border-t border-slate-900 text-center text-slate-600 text-[10px] uppercase tracking-[0.2em] no-print">
+        <footer class="mt-20 pt-10 border-t border-slate-900 text-center text-slate-600 text-[10px] uppercase tracking-widest no-print">
             Build with Precision — Ammar Mahfoud © 2026
         </footer>
     </main>
 
     <script>
-        function handleDownload() {
-            window.print();
+        let currentLang = 'en';
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            document.body.classList.toggle('rtl', currentLang === 'ar');
+            document.getElementById('lang-btn-text').innerText = currentLang === 'en' ? 'العربية' : 'English';
+            document.getElementById('pdf-btn-text').innerText = currentLang === 'en' ? 'Download CV' : 'تحميل السيرة الذاتية';
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.innerText = el.getAttribute('data-' + currentLang);
+            });
         }
-
-        function copyToClipboard(text) {
-            const el = document.createElement('textarea');
-            el.value = text;
-            document.body.appendChild(el);
-            el.style.position = 'fixed';
-            el.style.left = '-9999px';
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-            
-            const toast = document.getElementById("toast");
-            toast.className = "copy-toast show";
-            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
-        }
-
-        // تحسين التفاعل على الموبايل
-        document.querySelectorAll('.glass-card').forEach(card => {
-            card.addEventListener('touchstart', () => {}, {passive: true});
-        });
     </script>
 </body>
 </html>
